@@ -8,5 +8,6 @@ spring:
       name: admin      password: admin
 mybatis:  type-aliases-package: com.springboot.domain
   
+  
     
     

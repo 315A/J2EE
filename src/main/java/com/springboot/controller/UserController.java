@@ -1,55 +1,34 @@
 package com.springboot.controller;
 
-import java.security.Principal;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.springboot.domain.MyUser;
 import com.springboot.mapper.MyUserMapper;
 
-
 @RestController
-@RequestMapping("/admin")
 public class UserController {
 	@Autowired
 	MyUserMapper myUserMapper;
-	
-    @RequestMapping(value="")
-    public String welcome()
-    {
-    	return "hello in /admin";
-    }
-    @RequestMapping(value="/{id}",method =RequestMethod.PUT)
-    public String getAccountById(@PathVariable("id") Long id)
-    {
-    	System.out.println(id);
-    	MyUser myUser=myUserMapper.getOne(id);
-    	return "cc";
-    }
-    @RequestMapping(value="/all")
-    public List<MyUser> getAllAccount()
-    {
-    	return myUserMapper.getAll();
-    }
-    @RequestMapping("/greeting")
-    public String greeting(@RequestParam(value="name",defaultValue="World") String name) 
-    {
-    	return name;
-
-    	
+	@Autowired
+    private PasswordEncoder passwordEncoder; //security提供的加密接口，先写着，等会配置
+	@PostMapping("/doRegister")
+    public String register(@RequestParam(value="name",required = true)String name,
+    		@RequestParam(value="username",required = true)String username,
+    		@RequestParam(value="password",required = true)String password) {
+		MyUser user=new MyUser();
+		user.setName(name);
+		user.setPassword(passwordEncoder.encode(password));
+		user.setUsername(username);
+		myUserMapper.insert(user);
+        return "注册成功";
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+//https://blog.csdn.net/agonie201218/article/details/102914291
 public class MyUser implements Serializable{
 private Long id;
 private String name;

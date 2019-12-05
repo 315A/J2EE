@@ -29,9 +29,18 @@ public interface MyUserMapper {
 	@Result(property="username",column="USERNAME",jdbcType = JdbcType.VARCHAR),
 	@Result(property="password",column="PASSWORD",jdbcType = JdbcType.VARCHAR),
 	@Result(property="name",column="NAME",jdbcType = JdbcType.VARCHAR)})
-    MyUser getOne(Long id);
+    MyUser getOneById(long id);
 	
-	@Insert("INERT INTO "+TABLE_NAME+"(USERNAME,PASSWORD,NAME) "
+	
+	@Select("SELECT * FROM"+TABLE_NAME+"WHERE USERNAME = #{username}")
+	@Results(
+	{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
+	@Result(property="username",column="USERNAME",jdbcType = JdbcType.VARCHAR),
+	@Result(property="password",column="PASSWORD",jdbcType = JdbcType.VARCHAR),
+	@Result(property="name",column="NAME",jdbcType = JdbcType.VARCHAR)})
+    MyUser getOneByUsername(String username);
+	
+	@Insert("INSERT INTO "+TABLE_NAME+"(USERNAME,PASSWORD,NAME) "
 			+ "VALUES(#{username}, #{password}, #{name})")
     void insert(MyUser user);
 }

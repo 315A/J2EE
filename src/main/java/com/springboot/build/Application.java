@@ -4,6 +4,7 @@ import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 //
 @ComponentScan(basePackages = {"com.springboot"})
 @MapperScan("com.springboot.mapper")
+@EnableAutoConfiguration
 public class Application{
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
