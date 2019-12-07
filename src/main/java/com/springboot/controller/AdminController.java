@@ -28,17 +28,11 @@ public class AdminController {
 	@Autowired
 	MyUserMapper myUserMapper;
 	
-    @RequestMapping(value="")
-    public String welcome()
-    {
-    	return "hello in /admin";
-    }
     @RequestMapping(value="/{id}",method =RequestMethod.PUT)
-    public String getAccountById(@PathVariable("id") Long id)
+    public MyUser getAccountById(@PathVariable("id") Long id)
     {
     	System.out.println(id);
-    	MyUser myUser=myUserMapper.getOneById(id);
-    	return "cc";
+    	return myUserMapper.getOneById(id);
     }
     @RequestMapping(value="/all")
     public List<MyUser> getAllAccount()

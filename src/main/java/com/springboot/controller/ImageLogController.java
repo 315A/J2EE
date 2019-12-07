@@ -10,14 +10,12 @@ import com.springboot.domain.ImageLog;
 import com.springboot.mapper.ImageLogMapper;
 
 @RestController
-@RequestMapping("log")
+@RequestMapping("/log")
 public class ImageLogController {
 	@Autowired
 	ImageLogMapper imageLogMapper;
 	@RequestMapping("/search")
 	List<ImageLog>getAllLog(){
 		return imageLogMapper.getAllImageLog();
-		
-
 	}
 }

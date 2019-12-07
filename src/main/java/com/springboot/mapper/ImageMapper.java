@@ -2,11 +2,13 @@ package com.springboot.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 
 import com.springboot.domain.Image;
@@ -27,7 +29,7 @@ public interface ImageMapper {
 	@Result(property="thumbImg",column="THUMB_IMG",jdbcType = JdbcType.BLOB)})
     List<Image> SearchImage(String location);
 	
-	@Select("SELECT ID,IMG,DATE,USERNAME,LOCATION,LONGTITUDE,LATITUDE FROM"+TABLE_NAME+"where id=#{id}")
+	@Select("SELECT ID,IMG,DATE,USERNAME,LOCATION,LONGTITUDE,LATITUDE FROM"+TABLE_NAME+"where ID=#{id}")
 	@Results(
 	{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
 	@Result(property="img",column="IMG",jdbcType = JdbcType.BLOB),
@@ -37,4 +39,10 @@ public interface ImageMapper {
 	@Result(property="longtitude",column="LONGTITUDE",jdbcType = JdbcType.DOUBLE),
 	@Result(property="latitude",column="LATITUDE",jdbcType = JdbcType.DOUBLE)})
     Image getImageById(@Param("id")Long id);
+	
+	@Delete("delete from"+TABLE_NAME+"where ID=#{id}")
+	void deleteImageById(Long id);
+	
+	@Update("update"+TABLE_NAME+"SET LOCATION=#{location,jdbcType=VARCHAR},LONGTITUDE=#{longtitude},LATITUDE=#{latitude} where ID=#{id}")
+	void updateImage(Image image);
 }

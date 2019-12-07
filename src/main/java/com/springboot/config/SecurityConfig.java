@@ -44,6 +44,7 @@ myuserAuthenticationDetailsSource;
         .antMatchers("/register", "/login","/index.html").permitAll()     //除了***能够无认证访问
         .antMatchers("/admin/**").hasRole("ADMIN")
         .antMatchers("/user/**").hasRole("USER")
+        .antMatchers("/static/**").permitAll()
         .anyRequest().authenticated()    //任何请求都需要认证
         .and()
         .formLogin()

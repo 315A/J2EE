@@ -89,5 +89,34 @@ public class ImageController {
 		imageLogMapper.InsertImageLog(imageLog);
 		return imageMapper.SearchImage("%"+location+"%");
 	}
+	@RequestMapping("/delete/{id}")
+	void deleteImage(@PathVariable("id")Long id,
+@RequestParam(value="username",required = true)String username) {
+		imageMapper.deleteImageById(id);
+		
+		ImageLog imageLog=new ImageLog();
+		imageLog.setDate(new Date());
+		imageLog.setOp("DELETE");
+		imageLog.setUsername(username);
+	}
+	@RequestMapping("/update/{id}")
+	void updateImage(@PathVariable(value="id")Long id,
+			@RequestParam(value="username",required = true)String username,
+			@RequestParam(value="location",required = true)String location,
+			@RequestParam(value="latitude",required = true)Double latitude,
+			@RequestParam(value="longtitude",required = true)Double longtitude)
+	{
+		Image image=new Image();
+		image.setId(id);
+		image.setUsername(username);
+		image.setLatitude(latitude);
+		image.setLongtitude(longtitude);
+		image.setLocation(location);
+		imageMapper.updateImage(image);
+		ImageLog imageLog=new ImageLog();
+		imageLog.setDate(new Date());
+		imageLog.setOp("UPDATE");
+		imageLog.setUsername(username);
+	}
 
 }
