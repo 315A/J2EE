@@ -37,10 +37,12 @@ public interface MyUserMapper {
 	{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
 	@Result(property="username",column="USERNAME",jdbcType = JdbcType.VARCHAR),
 	@Result(property="password",column="PASSWORD",jdbcType = JdbcType.VARCHAR),
-	@Result(property="name",column="NAME",jdbcType = JdbcType.VARCHAR)})
+	@Result(property="name",column="NAME",jdbcType = JdbcType.VARCHAR),
+	@Result(property="role",column="ROLE",jdbcType = JdbcType.VARCHAR)}
+	)
     MyUser getOneByUsername(String username);
 	
-	@Insert("INSERT INTO "+TABLE_NAME+"(USERNAME,PASSWORD,NAME) "
-			+ "VALUES(#{username}, #{password}, #{name})")
+	@Insert("INSERT INTO "+TABLE_NAME+"(USERNAME,PASSWORD,NAME,ROLE) "
+			+ "VALUES(#{username}, #{password}, #{name},#{role})")
     void insert(MyUser user);
 }

@@ -16,7 +16,7 @@ private Long id;
 private String name;
 private String username;
 private String password;
-private String roles;
+private String role="USER";
 public Long getId() {
 	return id;
 }
@@ -41,11 +41,13 @@ public String getPassword() {
 public void setPassword(String password) {
 	this.password = password;
 }
-public String getRoles() {
-	return roles;
+public String getRole() {
+	return role;
 }
-public void setRoles(String roles) {
-	this.roles = roles;
+public void setRole(String role) {
+	this.role = role;
 }
+
+
 
 }

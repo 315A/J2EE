@@ -1,4 +1,4 @@
-package com.springboot.domain;
+package com.springboot.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
+import com.springboot.domain.MyUserDetails;
 import com.springboot.service.MyUserDetailService;
 @Component
 public class MyUserAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider{

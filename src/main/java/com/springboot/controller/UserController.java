@@ -19,7 +19,7 @@ public class UserController {
 	MyUserMapper myUserMapper;
 	@Autowired
     private PasswordEncoder passwordEncoder; //security提供的加密接口，先写着，等会配置
-	@PostMapping("/doRegister")
+	@PostMapping("/register")
     public String register(@RequestParam(value="name",required = true)String name,
     		@RequestParam(value="username",required = true)String username,
     		@RequestParam(value="password",required = true)String password) {
@@ -27,6 +27,7 @@ public class UserController {
 		user.setName(name);
 		user.setPassword(passwordEncoder.encode(password));
 		user.setUsername(username);
+		user.setRole("USER");
 		myUserMapper.insert(user);
         return "注册成功";
     }

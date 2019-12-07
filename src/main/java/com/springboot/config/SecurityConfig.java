@@ -20,13 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
-import com.springboot.domain.MyUserAuthenticationProvider;
 import com.springboot.domain.MyUserDetails;
 import com.springboot.service.MyUserDetailService;
 
 @Configuration
 @EnableWebSecurity
-public class SrcurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 @Autowired
 MyUserAuthenticationProvider userAuthenticationProvider;
@@ -42,7 +41,9 @@ myuserAuthenticationDetailsSource;
 	protected void configure(HttpSecurity http) throws Exception {
 		http
         .authorizeRequests()    //认证请求
-        .antMatchers("/register", "/doRegister", "/login", "/doLogin","/index.html").permitAll()     //除了***能够无认证访问
+        .antMatchers("/register", "/login","/index.html").permitAll()     //除了***能够无认证访问
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/user/**").hasRole("USER")
         .anyRequest().authenticated()    //任何请求都需要认证
         .and()
         .formLogin()

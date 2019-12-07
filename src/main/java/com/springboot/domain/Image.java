@@ -8,6 +8,7 @@ public class Image {
     private Date date;
     private byte[] img;
     private byte[] thumbImg;
+    private String location;
 	private Double latitude;
     private Double longtitude;
     public Long getId() {
@@ -39,6 +40,12 @@ public class Image {
 	}
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	public Double getLongtitude() {
 		return longtitude;
