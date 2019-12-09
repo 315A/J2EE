@@ -80,14 +80,18 @@ public class ImageController {
 	@RequestMapping("/search")
 	@ResponseBody
 	List<Image> searchImage(@RequestParam(value="username",required = true)String username,
-			@RequestParam(value="location",required = false)String location,
+			@RequestParam(value="location",required = true)String location,
+			@RequestParam(value="lowLong",required = true)Double lowLong,
+			@RequestParam(value="highLong",required = true)Double highLong,
+			@RequestParam(value="lowLa",required = true)Double lowLa,
+			@RequestParam(value="highLa",required = true)Double highLa,
 			HttpServletRequest request) {
 		ImageLog imageLog=new ImageLog();
 		imageLog.setDate(new Date());
 		imageLog.setOp("SEARCH");
-		imageLog.setUsername(username);
+		imageLog.setUsername("%"+username+"%");
 		imageLogMapper.InsertImageLog(imageLog);
-		return imageMapper.SearchImage("%"+location+"%");
+		return imageMapper.SearchImage(location, lowLa, lowLong, highLa, highLong);
 	}
 	@RequestMapping("/delete/{id}")
 	void deleteImage(@PathVariable("id")Long id,

@@ -22,12 +22,16 @@ public interface ImageMapper {
     + "#{longtitude,jdbcType=DOUBLE},#{latitude,jdbcType=DOUBLE})"})
 	void InsertImage(Image image);
 	
-	@Select("SELECT ID,LOCATION,THUMB_IMG FROM"+TABLE_NAME+"where LOCATION like #{location}")
+	@Select("SELECT ID,LOCATION,THUMB_IMG FROM"+TABLE_NAME+"where( LOCATION like #{location}) and (LATITUDE between "
+			+ "#{lowLa} and #{highLa}) and (LONGTITUDE between #{lowLong} and #{highLong})")
 	@Results(
 	{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
 	@Result(property="location",column="LOCATION",jdbcType = JdbcType.VARCHAR,id = true),
 	@Result(property="thumbImg",column="THUMB_IMG",jdbcType = JdbcType.BLOB)})
-    List<Image> SearchImage(String location);
+    List<Image> SearchImage(@Param("location")String location,@Param("lowLa")Double lowLa,
+    		@Param("lowLong")Double lowLong,@Param("highLa")Double highLa,
+    		@Param("highLong")Double highLong
+    		);
 	
 	@Select("SELECT ID,IMG,DATE,USERNAME,LOCATION,LONGTITUDE,LATITUDE FROM"+TABLE_NAME+"where ID=#{id}")
 	@Results(
