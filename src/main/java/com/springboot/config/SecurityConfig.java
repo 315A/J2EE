@@ -41,7 +41,7 @@ myuserAuthenticationDetailsSource;
 	protected void configure(HttpSecurity http) throws Exception {
 		http
         .authorizeRequests()    //认证请求
-        .antMatchers("/register", "/login","/index.html","/info").permitAll()     //除了***能够无认证访问
+        .antMatchers("/register", "/login","/index.html","/info","/failure","/success").permitAll()     //除了***能够无认证访问
         .antMatchers("/admin/**").hasRole("ADMIN")
         .antMatchers("/user/**").hasRole("USER")
         .antMatchers("/static/**").permitAll()
@@ -50,7 +50,8 @@ myuserAuthenticationDetailsSource;
         .formLogin()
         .loginPage("/index.html")
         .loginProcessingUrl("/login")
-        .defaultSuccessUrl("/index.html",true)
+        .defaultSuccessUrl("/success",true)
+        .failureForwardUrl("/failure")
         .usernameParameter("username")
         .passwordParameter("password")
         .and()
