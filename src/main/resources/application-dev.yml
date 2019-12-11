@@ -8,6 +8,8 @@ spring:
       name: admin      password: admin
 mybatis:  type-aliases-package: com.springboot.domain
 server:  servlet: 
-    context-path: /springboot      
+    context-path: /springboot
+    session:      timeout: 10800s
+          
     
     
