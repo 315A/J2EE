@@ -22,16 +22,21 @@ public interface ImageMapper {
     + "#{longtitude,jdbcType=DOUBLE},#{latitude,jdbcType=DOUBLE})"})
 	void InsertImage(Image image);
 	
-	@Select("SELECT ID,LOCATION,THUMB_IMG FROM"+TABLE_NAME+"where( LOCATION like #{location}) and (LATITUDE between "
+	@Select("SELECT ID,IMG,THUMB_IMG,DATE,USERNAME,LOCATION,LONGTITUDE,LATITUDE FROM"+TABLE_NAME+"where( LOCATION like"
+			+ " CONCAT(CONCAT('%',#{location}),'%')) and (LATITUDE between "
 			+ "#{lowLa} and #{highLa}) and (LONGTITUDE between #{lowLong} and #{highLong})")
 	@Results(
-	{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
-	@Result(property="location",column="LOCATION",jdbcType = JdbcType.VARCHAR,id = true),
-	@Result(property="thumbImg",column="THUMB_IMG",jdbcType = JdbcType.BLOB)})
+			{@Result(property="id",column="ID",jdbcType = JdbcType.BIGINT,id = true),
+				@Result(property="img",column="IMG",jdbcType = JdbcType.BLOB),
+				@Result(property="thumbImg",column="THUMB_IMG",jdbcType = JdbcType.BLOB),
+				@Result(property="date",column="DATE",jdbcType = JdbcType.TIMESTAMP),
+				@Result(property="username",column="USERNAME",jdbcType = JdbcType.VARCHAR),
+				@Result(property="location",column="LOCATION",jdbcType = JdbcType.VARCHAR),
+				@Result(property="longtitude",column="LONGTITUDE",jdbcType = JdbcType.DOUBLE),
+				@Result(property="latitude",column="LATITUDE",jdbcType = JdbcType.DOUBLE)})
     List<Image> SearchImage(@Param("location")String location,@Param("lowLa")Double lowLa,
     		@Param("lowLong")Double lowLong,@Param("highLa")Double highLa,
-    		@Param("highLong")Double highLong
-    		);
+    		@Param("highLong")Double highLong);
 	
 	@Select("SELECT ID,IMG,DATE,USERNAME,LOCATION,LONGTITUDE,LATITUDE FROM"+TABLE_NAME+"where ID=#{id}")
 	@Results(

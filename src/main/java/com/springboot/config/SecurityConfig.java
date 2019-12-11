@@ -73,14 +73,12 @@ myuserAuthenticationDetailsSource;
 	}
 	 @Override
 	 public void configure(WebSecurity web){
-	 //        platform.ignoring().antMatchers("/");
-		 //静态资源可以不需要登录
+	//platform.ignoring().antMatchers("/");
+	//静态资源可以不需要登录
 	 }
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
 }
 

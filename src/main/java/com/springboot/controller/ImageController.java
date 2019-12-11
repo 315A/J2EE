@@ -89,7 +89,7 @@ public class ImageController {
 		ImageLog imageLog=new ImageLog();
 		imageLog.setDate(new Date());
 		imageLog.setOp("SEARCH");
-		imageLog.setUsername("%"+username+"%");
+		imageLog.setUsername(username);
 		imageLogMapper.InsertImageLog(imageLog);
 		return imageMapper.SearchImage(location, lowLa, lowLong, highLa, highLong);
 	}
