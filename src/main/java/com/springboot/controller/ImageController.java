@@ -48,6 +48,7 @@ public class ImageController {
 			@RequestParam(value="location",required = false)String location,
 			@RequestParam(value="longtitude",required = false)Double longtitude,
 			@RequestParam(value="latitude",required = false)Double latitude,
+			@RequestParam(value="type",required = true)Integer type,
 			HttpServletRequest request) throws Exception{
 		byte[] img = imgFile.getBytes();
 		byte[] thumbImg= ImageUtil.generateThumb(img);
@@ -55,7 +56,7 @@ public class ImageController {
         Image image=new Image();
         image.setDate(date);image.setImg(img);
         image.setThumbImg(thumbImg);image.setUsername(username);image.setLocation(location);
-        image.setLongtitude(longtitude);image.setLatitude(latitude);
+        image.setLongtitude(longtitude);image.setLatitude(latitude);image.setType(type);
         imageMapper.InsertImage(image);
         
 		ImageLog imageLog=new ImageLog();
@@ -65,9 +66,10 @@ public class ImageController {
 		imageLogMapper.InsertImageLog(imageLog);
 		return "图片插入成功";
 	}
-	@RequestMapping("/download/{id}")
+	
+	@RequestMapping("/download2")
 	@ResponseBody
-	Image downloadImage(@PathVariable("id") Long id,
+	Image downloadImage2(@RequestParam(value="id", required = true) Long id,
 			@RequestParam(value="username",required = true)String username,
 			HttpServletRequest request) {
 		ImageLog imageLog=new ImageLog();
@@ -85,14 +87,17 @@ public class ImageController {
 			@RequestParam(value="highLong",required = true)Double highLong,
 			@RequestParam(value="lowLa",required = true)Double lowLa,
 			@RequestParam(value="highLa",required = true)Double highLa,
+			@RequestParam(value="type",required = true)Integer type,
 			HttpServletRequest request) {
 		ImageLog imageLog=new ImageLog();
 		imageLog.setDate(new Date());
 		imageLog.setOp("SEARCH");
 		imageLog.setUsername(username);
 		imageLogMapper.InsertImageLog(imageLog);
-		return imageMapper.SearchImage(location, lowLa, lowLong, highLa, highLong);
+		return imageMapper.SearchImage(location, lowLa, lowLong, highLa, highLong, type);
 	}
+	
+	
 	@RequestMapping("/delete/{id}")
 	void deleteImage(@PathVariable("id")Long id,
 @RequestParam(value="username",required = true)String username) {
@@ -103,12 +108,24 @@ public class ImageController {
 		imageLog.setOp("DELETE");
 		imageLog.setUsername(username);
 	}
+	
+	@RequestMapping("/all")
+	List<Image> Image(@RequestParam(value="username",required = true)String username) {
+		
+		ImageLog imageLog=new ImageLog();
+		imageLog.setDate(new Date());
+		imageLog.setOp("SEARCH");
+		imageLog.setUsername(username);
+		return 	imageMapper.getAllImage();
+	}
+	
 	@RequestMapping("/update/{id}")
 	void updateImage(@PathVariable(value="id")Long id,
 			@RequestParam(value="username",required = true)String username,
 			@RequestParam(value="location",required = true)String location,
 			@RequestParam(value="latitude",required = true)Double latitude,
-			@RequestParam(value="longtitude",required = true)Double longtitude)
+			@RequestParam(value="longtitude",required = true)Double longtitude,
+			@RequestParam(value="type",required = true)Integer type)
 	{
 		Image image=new Image();
 		image.setId(id);
@@ -116,6 +133,7 @@ public class ImageController {
 		image.setLatitude(latitude);
 		image.setLongtitude(longtitude);
 		image.setLocation(location);
+		image.setType(type);
 		imageMapper.updateImage(image);
 		ImageLog imageLog=new ImageLog();
 		imageLog.setDate(new Date());

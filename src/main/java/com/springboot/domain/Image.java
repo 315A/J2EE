@@ -11,8 +11,15 @@ public class Image {
     private String location;
 	private Double latitude;
     private Double longtitude;
+    private Integer type;
     public Long getId() {
 		return id;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	public void setId(Long id) {
 		this.id = id;

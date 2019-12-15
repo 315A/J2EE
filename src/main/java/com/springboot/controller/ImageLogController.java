@@ -14,7 +14,7 @@ import com.springboot.mapper.ImageLogMapper;
 public class ImageLogController {
 	@Autowired
 	ImageLogMapper imageLogMapper;
-	@RequestMapping("/search")
+	@RequestMapping("/all")
 	List<ImageLog>getAllLog(){
 		return imageLogMapper.getAllImageLog();
 	}
