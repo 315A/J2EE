@@ -6,6 +6,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 public interface TableMapper {
-		@Select("select TABLE_NAME,TABLE_ROWS from information_schema.TABLES where TABLE_SCHEMA=(select database())")
-		List<Map> showInfo();
+		@Select("select count(1) from IMAGE")
+		 Integer showImageInfo();
+		
+		@Select("select count(1) from IMG_LOG")
+		 Integer showImgLogInfo();
+		
+		@Select("select count(1) from USER")
+		 Integer showUserInfo();
 }
