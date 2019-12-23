@@ -5,9 +5,25 @@ spring:
     password: 315A315A
     driver-class-name: com.mysql.jdbc.Driver 
       security:    user:
-      name: admin      password: admin
+      name: admin      password: admin  resources:    cache:      cachecontrol:        cache-private: true
+        must-revalidate: false
+        max-age : 31536000
+        no-cache: false
+        no-store: false
+    static-locations:    - classpath:/static/
+      
 mybatis:  type-aliases-package: com.springboot.domain
-server:  servlet: 
+server:
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types:
+    - application/javascript
+    - text/css
+    - video/mp4
+    - video/x-flv
+    - image/jpeg
+    - application/json  servlet: 
     context-path: /springboot
     session:      timeout: 10800s
           
